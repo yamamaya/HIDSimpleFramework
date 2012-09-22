@@ -1,5 +1,9 @@
 #include "HIDSimpleFramework.h"
 
+// RB4 --> push switch --> GND
+// RB5 --> R --> LED --> GND
+// RC0(AN4) --> potentiometer
+
 WORD ReadAnalogPort( BYTE ch ) {
 	ADCON0 = ( ( ch ) << 2 ) | 0x03;
 	while ( ADCON0bits.GO ) {
