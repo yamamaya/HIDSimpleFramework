@@ -1,5 +1,7 @@
 #include <string.h>
 #include "config.h"
+#include "AppLib/USB/usb.h"
+#include "AppLib/USB/usb_function_hid.h"
 #include "HIDSimpleFramework.h"
 
 USB_HANDLE USBOutHandle;

@@ -1,9 +1,5 @@
 #include "HIDSimpleFramework.h"
 
-// RB4 --> push switch --> GND
-// RB5 --> R --> LED --> GND
-// RC0(AN4) --> potentiometer
-
 WORD ReadAnalogPort( BYTE ch ) {
 	ADCON0 = ( ( ch ) << 2 ) | 0x03;
 	while ( ADCON0bits.GO ) {
@@ -38,9 +34,9 @@ void run( void ) {
 	WORD w;
 
 	if ( HIDReceive( buff, sizeof( buff ) ) ) {
-		switch ( hid_report_out[0] ) {
+		switch ( buff[0] ) {
 			case 0x00: // Set LED
-				if ( hid_report_out[1] ) {
+				if ( buff[1] ) {
 					LATBbits.LATB5 = 1;
 				} else {
 					LATBbits.LATB5 = 0;

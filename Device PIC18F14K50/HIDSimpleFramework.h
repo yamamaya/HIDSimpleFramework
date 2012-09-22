@@ -1,10 +1,9 @@
 #ifndef __HIDSimpleFramework_h__
 #define __HIDSimpleFramework_h__
 
+#include "Compiler.h"
 #include "GenericTypeDefs.h"
 #include "HardwareProfile.h"
-#include "AppLib/USB/usb.h"
-#include "AppLib/USB/usb_function_hid.h"
 
 void init( void );
 void run( void );
