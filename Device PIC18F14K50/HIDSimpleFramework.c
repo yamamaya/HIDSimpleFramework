@@ -61,6 +61,10 @@ void HIDSend( BYTE *buff, int len ) {
 	USBInHandle = HIDTxPacket( HID_EP, (BYTE *)hid_report_in ,HID_INT_IN_EP_SIZE );
 }
 
+BOOL HIDSendReady( void ) {
+	return ! HIDTxHandleBusy( USBInHandle );
+}
+
 BOOL HIDReceive( BYTE *buff, int len ) {
 	if( USBDeviceState >= CONFIGURED_STATE && USBSuspendControl != 1 ) {
 		if ( ! HIDRxHandleBusy( USBOutHandle ) ) {

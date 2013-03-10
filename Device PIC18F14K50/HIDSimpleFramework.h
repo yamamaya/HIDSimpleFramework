@@ -12,6 +12,10 @@ void run( void );
 // The data data should be less than or equal to 64 bytes.
 void HIDSend( BYTE *buff, int len );
 
+// Retrieve send buffer status.
+// If send buffer is empty (the data in the buffer is already sent), returns true, otherwise returns false.
+BOOL HIDSendReady( void );
+
 // Receive data from host.
 // buff and len should be enough size to receive, otherwise the data will be truncated.
 // The maximum size of data is 64 bytes.
