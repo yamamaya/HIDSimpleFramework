@@ -1,0 +1,19 @@
+MPLABで新規プロジェクトを作成し、ルートディレクトリのすべてのファイルと、
+AppLibの中のファイル二つをプロジェクトに追加して下さい。
+
+HardwareProfile.h の中のVID/PIDを必ず変更して下さい。
+
+アプリケーションプログラムの本体は main.c の中にあります。
+
+コンパイルするには、includeパスに「./Applib」を追加して下さい。
+
+HardwareProfile.h    ... 設定全般
+config.h             ... コンフィグビット
+main.c               ... アプリケーション本体
+
+HIDSimpleFramework.c ... フレームワーク本体
+HIDSimpleFramework.h ... フレームワーク用ヘッダファイル
+Compiler.h
+usb_config.h
+usb_descriptors.c
+Applib/              ... Microchip Application Librariesから抜粋
