@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="HIDSimpleFramework : Simple USB-HID framework" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>HIDSimpleFramework</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/yamamaya/HIDSimpleFramework">View on GitHub</a>
+
+          <h1 id="project_title">HIDSimpleFramework</h1>
+          <h2 id="project_tagline">Simple USB-HID framework</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/yamamaya/HIDSimpleFramework/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/yamamaya/HIDSimpleFramework/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>HIDSimpleFrameworkについて</h3>
+
+<p>HIDSimpleFrameworkはUSB HIDを用いてホスト（PC）とマイコンのプログラムを連携させる、非常にシンプルなフレームワークです。
+できることは限られていますが、USB HIDなのでドライバが不要、また、CDCデバイスのようにCOMポートを選択する必要もありません。
+ホスト側のライブラリはC#で書かれており、.NET frameworkさえインストールされていれば、Windows XP～Windows 8まで幅広い環境で確実に動作します。</p>
+
+<h3>最も簡単な使い方</h3>
+
+<p>PCと接続して、ホスト（PC）からの指令でLEDを点滅させる簡単なサンプルは以下のようになります。
+64バイトのパケットにデータを入れてホストから送信し、それをマイコンで受信する、単純な動作です。マイコン側は、LEDのポートの初期化と簡単なループ以外になにも書く必要がありません。</p>
+
+<p>デバイス（マイコン）側のコード：</p>
+
+<pre><code>void init( void ) {
+    TRISBbits.TRISB1 = 0;   // RB1をデジタル出力に設定
+}
+
+void run( void ) {
+    BYTE buff[64];  // 受信バッファ
+
+    // データが届いていたら受信する
+    if ( HIDReceive( buff, sizeof( buff ) ) ) {
+        // LEDを点けるか消すか
+        LATBbits.LATB1 = ( buff[0] ? 1 : 0 );
+    }
+}
+</code></pre>
+
+<p>ホスト（ＰＣ）側のコード：</p>
+
+<pre><code>// デバイスに接続
+HIDSimple dev = new HIDSimple();
+dev.Open( vid, pid );
+while ( true ) {
+    // １を送信
+    dev.Send( new byte[] { 1 } );
+    System.Threading.Thread.Sleep( 500 );
+    // ０を送信
+    dev.Send( new byte[] { 0 } );
+    System.Threading.Thread.Sleep( 500 );
+}
+</code></pre>
+
+<h3>もう少し実用的な使い方</h3>
+
+<p>一方的にホストから指令を送るだけではあまり使えないので、ボタンを押したらLEDが光るサンプルを作ってみます。
+マイコンに接続されたボタンの状態をホスト側で読み取り、LEDを点灯させる指令をマイコンに送信します。</p>
+
+<p>デバイス（マイコン）側のコード：</p>
+
+<pre><code>void init( void ) {
+    ANSELBbits.ANSB0 = 0;   // RB0をデジタル入力に設定
+    TRISBbits.TRISB0 = 1;
+
+    TRISBbits.TRISB1 = 0;   // RB1をデジタル出力に設定
+}
+
+void run( void ) {
+    BYTE buff[64];  // 受信バッファ
+
+    // データが届いていたら受信する
+    if ( HIDReceive( buff, sizeof( buff ) ) ) {
+        // LEDを点けるか消すか
+        LATBbits.LATB1 = ( buff[0] ? 1 : 0 );
+    }
+    // 送信可能？
+    if ( HIDSendReady() ) {
+        // ボタンの状態を送る
+        buff[0] = PORTBbits.RB0;
+        HIDSend( buff, 1 );
+    }
+}
+</code></pre>
+
+<p>ホスト（ＰＣ）側のコード：</p>
+
+<pre><code>// デバイスに接続
+HIDSimple dev = new HIDSimple();
+dev.Open( vid, pid );
+while ( true ) {
+    // 受信する
+    byte[] buff = dev.Receive();
+    // そのまま送り返す
+    dev.Send( buff );
+    System.Threading.Thread.Sleep( 100 );
+}
+</code></pre>
+
+<h3>お約束</h3>
+
+<p>このライブラリは三条項BSDライセンスとなっています。
+まったく自由にお使い下さい。但し特に保証もしません。</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">HIDSimpleFramework maintained by <a href="https://github.com/yamamaya">yamamaya</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
