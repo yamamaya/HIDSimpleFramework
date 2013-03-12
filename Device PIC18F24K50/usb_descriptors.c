@@ -236,7 +236,7 @@ ROM struct {
 } sd000 = {
 	sizeof( sd000 ),
 	USB_DESCRIPTOR_STRING,
-	{ 0x0409 }
+	{ USB_LANG_CODE }
 };
 
 //Manufacturer string descriptor
@@ -247,7 +247,7 @@ ROM struct {
 } sd001 = {
 	sizeof( sd001 ),
 	USB_DESCRIPTOR_STRING,
-	{ 'O','a','k','t','r','e','e','-','l','a', 'b','.' }
+	{ USB_MFR_STR }
 };
 
 //Product string descriptor
@@ -258,7 +258,7 @@ ROM struct {
 } sd002 = {
 	sizeof( sd002 ),
 	USB_DESCRIPTOR_STRING,
-	{ 'H','I','D',' ','S','a','m','p','l','e' }
+	{ USB_PROD_STR }
 };
 
 //Class specific descriptor - HID 
