@@ -104,6 +104,16 @@ void main() {
 	}
 	USBDeviceAttach();
 
+	ACTCONbits.ACTSRC = 1;
+	ACTCONbits.ACTEN = 1;
+
+	USBDeviceAttach();
+
+#ifdef WAIT_UNTIL_ACT_LOCK
+	while ( ! ACTCONbits.ACTLOCK ) {
+	}
+#endif
+
 	while ( 1 ) {
 		run();
 	}

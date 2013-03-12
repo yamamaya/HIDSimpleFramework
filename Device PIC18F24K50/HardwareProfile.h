@@ -10,4 +10,6 @@
 #define self_power 0
 #undef USE_USB_BUS_SENSE_IO
 
+#define WAIT_UNTIL_ACT_LOCK
+
 #endif
