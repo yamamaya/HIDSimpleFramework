@@ -102,7 +102,6 @@ void main() {
 			Nop();
 		}
 	}
-	USBDeviceAttach();
 
 	ACTCONbits.ACTSRC = 1;
 	ACTCONbits.ACTEN = 1;
