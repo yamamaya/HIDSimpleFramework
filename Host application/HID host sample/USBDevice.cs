@@ -14,7 +14,7 @@ namespace OaktreeLab.USBDevice {
         /// </summary>
         public uint PacketSize {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
