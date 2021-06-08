@@ -71,6 +71,12 @@ namespace OaktreeLab.USBDevice {
                         0,
                         IntPtr.Zero
                     );
+                    // VIDとPIDが一致しているが開けないデバイスだった場合に探索に戻る
+                    if (hDev.ToInt32() <= -1)
+                    {
+                        Native.CloseHandle(hDev);
+                        continue;
+                    }
                     break;
                 }
             }
